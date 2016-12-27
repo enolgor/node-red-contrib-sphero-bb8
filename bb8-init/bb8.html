@@ -1,0 +1,24 @@
+<script type="text/x-red" data-template-name="bb8-init">
+    <div class="form-row">
+        <label for="node-input-bb8"><i class="icon-bookmark"></i> BB8</label>
+        <input type="text" id="node-input-bb8">
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('bb8-init',{
+        category: 'bb8',
+        defaults: {
+            bb8: { 
+                value: "",
+                required: true,
+                type: 'bb8-config'
+            }
+        },
+        label: function() {
+            return "Init "+this.bb8.name;
+        }
+    });
+</script>
