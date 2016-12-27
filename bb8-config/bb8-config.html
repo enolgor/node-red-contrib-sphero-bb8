@@ -1,24 +1,32 @@
-<script type="text/x-red" data-template-name="bb8-init">
+<script type="text/x-red" data-template-name="bb8-config">
     <div class="form-row">
-        <label for="node-input-bb8"><i class="icon-bookmark"></i> BB8</label>
-        <input type="text" id="node-input-bb8">
+        <label for="node-config-input-uuid"><i class="icon-bookmark"></i> UUID</label>
+        <input type="text" id="node-config-input-uuid">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
+        <input type="text" id="node-config-input-name">
     </div>
 </script>
 
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('bb8-init',{
-        category: 'bb8',
+    RED.nodes.registerType('bb8-config',{
+        category: 'config',
         defaults: {
-            bb8: { 
+            uuid: { 
                 value: "",
                 required: true,
-                type: 'bb8-config'
-            }
+                //validate: RED.validators.regex(/^[A-Fa-f0-9]+$/)
+            },
+            name: { 
+                value: "My BB8",
+                required: true
+            },
         },
         label: function() {
-            return "Init "+this.bb8.name;
+            return "BB8: "+this.name;
         }
     });
 </script>

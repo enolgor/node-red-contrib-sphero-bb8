@@ -3,6 +3,10 @@
         <label for="node-input-bb8"><i class="icon-bookmark"></i> BB8</label>
         <input type="text" id="node-input-bb8">
     </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-bookmark"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
 </script>
 
 
@@ -15,10 +19,16 @@
                 value: "",
                 required: true,
                 type: 'bb8-config'
+            },
+            name: {
+                value: ""
             }
         },
         label: function() {
-            return "Init "+this.bb8.name;
-        }
+            return this.name || "Init";
+        },
+        inputs: 1,
+        outputs: 1,
+        color: '#C0DEED'
     });
 </script>
