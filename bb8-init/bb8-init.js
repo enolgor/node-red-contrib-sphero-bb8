@@ -4,7 +4,9 @@ const node = (RED) => {
 
     const BB8Init = function BB8Init(config){
         RED.nodes.createNode(this, config);
-        
+        this.on('message', ()=>{
+            
+        });
 
         
     }
