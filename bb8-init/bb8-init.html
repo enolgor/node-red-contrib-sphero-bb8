@@ -3,10 +3,6 @@
         <label for="node-input-bb8"><i class="icon-bookmark"></i> BB8</label>
         <input type="text" id="node-input-bb8">
     </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-bookmark"></i> Name</label>
-        <input type="text" id="node-input-name">
-    </div>
 </script>
 
 
@@ -19,13 +15,11 @@
                 value: "",
                 required: true,
                 type: 'bb8-config'
-            },
-            name: {
-                value: ""
             }
         },
         label: function() {
-            return this.name || "Init";
+            const name = RED.nodes.node(this.bb8)?RED.nodes.node(this.bb8).name:"BB8";
+            return "Init: "+name;
         },
         inputs: 1,
         outputs: 1,
