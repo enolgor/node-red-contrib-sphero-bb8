@@ -1,0 +1,35 @@
+<script type="text/x-red" data-template-name="bb8-color">
+    <div class="form-row">
+        <label for="node-input-bb8"><i class="icon-bookmark"></i> BB8</label>
+        <input type="text" id="node-input-bb8">
+    </div>
+    <div class="form-row">
+        <label for="node-input-color"><i class="icon-bookmark"></i> Color</label>
+        <input type="text" id="node-input-color">
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('bb8-color',{
+        category: 'bb8',
+        defaults: {
+            bb8: { 
+                value: "",
+                required: true,
+                type: 'bb8-config'
+            },
+            color: {
+                value: "green"
+            }
+        },
+        label: function() {
+            const name = RED.nodes.node(this.bb8)?RED.nodes.node(this.bb8).name:"BB8";
+            return "Color: "+name;
+        },
+        inputs: 1,
+        outputs: 1,
+        color: '#C0DEED'
+    });
+</script>
