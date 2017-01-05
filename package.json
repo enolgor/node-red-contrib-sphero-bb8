@@ -8,8 +8,10 @@
   "node-red": {
     "nodes": {
       "bb8-config": "bb8-config/bb8-config.js",
-      "bb8-init": "bb8-init/bb8-init.js",
-      "bb8-color": "bb8-color/bb8-color.js"
+      "bb8-connect": "bb8-connect/bb8-connect.js",
+      "bb8-color": "bb8-color/bb8-color.js",
+      "bb8-disconnect": "bb8-disconnect/bb8-disconnect.js",
+      "bb8-ping": "bb8-ping/bb8-ping.js"
     }
   },
   "dependencies": {
