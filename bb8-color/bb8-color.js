@@ -8,11 +8,11 @@ const node = (RED) => {
     const BB8Color = function BB8Color(config){
         RED.nodes.createNode(this, config);
 
-        const default_color = config.color;
         const bb8 = spheroBB8.getBB8(this, config);
 
         this.on('input', msg => {
-            bb8.device.color(msg.color || default_color, () => this.send(msg));
+            const color = msg.color || config.color;
+            bb8.exec('color', color).then(() => this.send(msg));
         });
 
     }

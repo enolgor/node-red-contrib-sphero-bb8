@@ -1,25 +1,32 @@
-<script type="text/x-red" data-template-name="bb8-ping">
+<script type="text/x-red" data-template-name="bb8-action">
     <div class="form-row">
         <label for="node-input-bb8"><i class="icon-bookmark"></i> BB8</label>
         <input type="text" id="node-input-bb8">
+    </div>
+    <div class="form-row">
+        <label for="node-input-action"><i class="icon-bookmark"></i> Action</label>
+        <input type="text" id="node-input-action">
     </div>
 </script>
 
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('bb8-ping',{
+    RED.nodes.registerType('bb8-action',{
         category: 'bb8',
         defaults: {
             bb8: { 
                 value: "",
                 required: true,
                 type: 'bb8-config'
+            },
+            action: {
+                value: "yes"
             }
         },
         label: function() {
             const name = RED.nodes.node(this.bb8)?RED.nodes.node(this.bb8).name:"BB8";
-            return "Ping: "+name;
+            return name + ": action ("+ this.action +")";
         },
         inputs: 1,
         outputs: 1,

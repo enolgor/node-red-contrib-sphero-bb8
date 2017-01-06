@@ -11,7 +11,9 @@
       "bb8-connect": "bb8-connect/bb8-connect.js",
       "bb8-color": "bb8-color/bb8-color.js",
       "bb8-disconnect": "bb8-disconnect/bb8-disconnect.js",
-      "bb8-ping": "bb8-ping/bb8-ping.js"
+      "bb8-roll": "bb8-roll/bb8-roll.js",
+      "bb8-stop": "bb8-stop/bb8-stop.js",
+      "bb8-action": "bb8-action/bb8-action.js"
     }
   },
   "dependencies": {

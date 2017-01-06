@@ -5,18 +5,20 @@ const node = (RED) => {
 
     const spheroBB8 = require('../sphero-bb8')(RED);
 
-    const BB8Ping = function BB8Ping(config){
+    const BB8Roll = function BB8Roll(config){
         RED.nodes.createNode(this, config);
 
         const bb8 = spheroBB8.getBB8(this, config);
 
         this.on('input', msg => {
-            bb8.connect(()=>this.send(msg));
+            const speed = msg.speed || config.speed;
+            const heading = msg.heading || config.heading;
+            bb8.exec('roll', speed, heading).then(() => this.send(msg));
         });
 
     }
 
-    RED.nodes.registerType('bb8-ping', BB8Ping);
+    RED.nodes.registerType('bb8-roll', BB8Roll);
 };
 
 module.exports = node;

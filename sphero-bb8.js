@@ -1,35 +1,86 @@
 'use strict'
 
-const sphero = require('sphero');
 const Promise = require('bluebird');
-const Adaptor = require('./ble-adaptor');
+const cp = require('child_process');
+const util = require('util');
+const EventEmitter = require('events').EventEmitter;
+const path = require('path');
 
 const bb8 = function bb8(uuid){
     this.uuid = uuid;
-    this.device = null;
-    this.connected = false;
-    this.connect = () => {
-        if(this.device){
-            return new Promise((accept,reject)=>{
-                this.device.connection._connectBLE(accept);
-            });
+    this.connected = false;   
+
+    this._child = null;
+    this._callbacks = {};
+    this._id = 0;
+    this._onReady = null;
+    this._onDisconnect = null;
+
+    this._handler = data => {
+        console.log(JSON.stringify(data, null ,4));
+        switch(data.cmd){
+            case 'ready': this._onReady(); break;
+            case 'resp': this._callbacks[data.id](data); break;
+            case 'event': this.emit(data.type, data.payload); break;
         }
-        this.device = sphero(this.uuid, {adaptor: new Adaptor(this.uuid)});
-        return this.device.connect();
-    }
-    this.disconnect = () => {
+    };
+
+    this._sendCommand = (cmd, payload)=>{
+        this._id++;
+        payload = payload || null;
         return new Promise((accept, reject)=>{
-            this.device.connection.peripheral.disconnect((err)=>{
-                if(err){
-                    reject();
-                    return;
-                }
-                this.connected = false;
-                accept();
-            });
+            if(!this._child) reject("BB8 is not connected");
+            this._child.send({cmd: cmd, payload: payload, id: this._id});
+            this._callbacks[this._id] = data => {
+                if(data.status === 'ok') accept(data);
+                else reject(data);
+            }
+        });
+    };
+
+    this._create_child = uuid => {
+        this._child = cp.fork(path.join(__dirname, './bb8-controller'), [uuid]);
+        this._child.on('message', this._handler);
+        this._child.on('exit', ()=>{
+            if(this._onDisconnect) this._onDisconnect();
+            this.emit('disconnect');
+            this._child = null;
+            this._callbacks = {};
+            this._id = 0;
+            this.onReady = null;
+            this._onDisconnect = null;
         });
     }
+
+    this.connect = () => {
+        if(this._child) return new Promise((accept,reject)=>accept());
+        return new Promise((accept, reject)=>{
+            this._onReady = () => {
+                this._sendCommand('connect').then(()=>{
+                    this.connected = true;
+                    this.emit('connect');
+                    accept();
+                }).catch(reject);
+            };
+            this._create_child(this.uuid);
+        });
+    }
+
+    this.disconnect = () => {
+        if(!this._child) return new Promise((accept,reject)=>accept());
+        return new Promise((accept, reject)=>{
+            this._onDisconnect = () => {
+                this.connected = false;
+                accept();
+            };
+            this._child.disconnect();
+        });
+    }
+    
+    this.exec = (cmd, ...args) => this._sendCommand(cmd, args);
 }
+
+util.inherits(bb8, EventEmitter);
 
 module.exports = (RED) => ({
     getBB8: (node, config) => {

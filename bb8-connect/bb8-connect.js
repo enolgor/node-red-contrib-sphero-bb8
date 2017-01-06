@@ -13,7 +13,6 @@ const node = (RED) => {
         this.on('input', msg => {
 
             bb8.connect()
-            .then(()=>bb8.device.stopOnDisconnect(true))
             .then(()=>{
                 bb8.connected = true;
                 this.send(msg);
