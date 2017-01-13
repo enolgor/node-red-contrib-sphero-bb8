@@ -13,7 +13,8 @@
       "bb8-disconnect": "bb8-disconnect/bb8-disconnect.js",
       "bb8-roll": "bb8-roll/bb8-roll.js",
       "bb8-stop": "bb8-stop/bb8-stop.js",
-      "bb8-action": "bb8-action/bb8-action.js"
+      "bb8-action": "bb8-action/bb8-action.js",
+      "bb8-event": "bb8-event/bb8-event.js"
     }
   },
   "dependencies": {

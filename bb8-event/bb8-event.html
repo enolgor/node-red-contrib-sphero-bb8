@@ -1,0 +1,40 @@
+<script type="text/x-red" data-template-name="bb8-event">
+    <div class="form-row">
+        <label for="node-input-bb8"><i class="icon-bookmark"></i> BB8 </label>
+        <input type="text" id="node-input-bb8">
+    </div>
+    <div class="form-row">
+        <label for="node-input-event"><i class="icon-bookmark"></i> Event</label>
+        <select id="node-input-event">
+            <option value="connect">connect</option>
+            <option value="disconnect">disconnect</option>
+            <option value="collision">collision</option>
+        </select>
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('bb8-event',{
+        category: 'bb8',
+        defaults: {
+            bb8: { 
+                value: "",
+                required: true,
+                type: 'bb8-config'
+            },
+            event: {
+                value: "",
+                require: true
+            }            
+        },
+        label: function() {
+            const name = RED.nodes.node(this.bb8)?RED.nodes.node(this.bb8).name:"BB8";
+            return name + ": event (" + this.event + ")";
+        },
+        inputs: 0,
+        outputs: 1,
+        color: '#C0DEED'
+    });
+</script>
