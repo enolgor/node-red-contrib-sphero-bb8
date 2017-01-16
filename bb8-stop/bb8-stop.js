@@ -11,7 +11,7 @@ const node = (RED) => {
         const bb8 = spheroBB8.getBB8(this, config);
 
         this.on('input', msg => {
-            bb8.exec('stop').then(() => this.send(msg));
+            bb8.exec('stop').then(() => this.send(msg)).catch(err => this.error(err));;
         });
     }
 

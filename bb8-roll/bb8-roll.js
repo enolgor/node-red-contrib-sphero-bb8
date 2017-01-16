@@ -13,7 +13,7 @@ const node = (RED) => {
         this.on('input', msg => {
             const speed = msg.speed || config.speed;
             const heading = msg.heading || config.heading;
-            bb8.exec('roll', speed, heading).then(() => this.send(msg));
+            bb8.exec('roll', speed, heading).then(() => this.send(msg)).catch(err => this.error(err));;
         });
 
     }

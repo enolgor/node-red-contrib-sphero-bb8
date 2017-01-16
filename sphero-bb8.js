@@ -32,8 +32,8 @@ const bb8 = function bb8(uuid){
             if(!this._child) reject("BB8 is not connected");
             this._child.send({cmd: cmd, payload: payload, id: this._id});
             this._callbacks[this._id] = data => {
-                if(data.status === 'ok') accept(data);
-                else reject(data);
+                if(data.status === 'ok') accept(data.payload);
+                else reject(data.payload);
             }
         });
     };

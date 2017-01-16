@@ -12,7 +12,7 @@ const node = (RED) => {
 
         this.on('input', msg => {
             const color = msg.color || config.color;
-            bb8.exec('color', color).then(() => this.send(msg));
+            bb8.exec('color', color).then(() => this.send(msg)).catch(err => this.error(err));;
         });
 
     }

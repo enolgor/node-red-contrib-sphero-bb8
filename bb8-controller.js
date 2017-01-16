@@ -39,7 +39,10 @@ const delay = ms => new Promise((accept, reject) => setTimeout(accept, ms));
 
 const handler = {};
 
-handler.connect = () => bb8.connect().then(()=>bb8.stopOnDisconnect(true)).then(()=>bb8.detectCollisions({device: 'bb8'}));
+handler.connect = () => bb8.connect()
+    .then(()=>bb8.stopOnDisconnect(true))
+    .then(()=>bb8.detectCollisions({device: 'bb8'}))
+    .then(()=>bb8.streamGyroscope());
 handler.disconnect = () => bb8.sleep(0,0,0).then(process.exit).catch(process.exit);
 
 handler.action = {};
@@ -58,15 +61,16 @@ handler.action.no = () =>
     .then(()=>bb8.roll(0,315)).then(()=>delay(200))
     .then(()=>bb8.roll(0,0));
 
-
 process.on('message', data => {
     console.log(JSON.stringify(data, null, 4));
+    let promise;
     switch(data.cmd){
-        case 'connect': handler.connect().then(()=>resp.ok(data.id)).catch(()=>resp.err(data.id)); break;
+        case 'connect': promise = handler.connect(); break;
         case 'disconnect': handler.disconnect(); break;
-        case 'action': handler.action[data.payload]().then(payload => resp.ok(data.id, payload)).catch(payload => resp.err(data.id, payload)); break;
-        default: bb8[data.cmd](...data.payload).then(payload => resp.ok(data.id, payload)).catch(payload => resp.err(data.id, payload)); break;
+        case 'action': promise = handler.action[data.payload](); break;
+        default: promise = bb8[data.cmd](...data.payload); break;
     }
+    promise.then(payload => resp.ok(data.id, payload)).catch(payload => resp.err(data.id, payload));
 });
 
 bb8.on('collision', data => event('collision', data));
@@ -91,6 +95,10 @@ bb8.on('preSleepWarning', ()=>{
 
 bb8.on('gyroAxisExceeded', ()=>{
 
+});
+
+bb8.on('gyroscope', data => {
+    console.log(data);
 });
 
 process.on('disconnect', handler.disconnect);
