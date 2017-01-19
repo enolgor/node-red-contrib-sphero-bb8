@@ -1,9 +1,17 @@
 {
   "name": "node-red-contrib-sphero-bb8",
   "version": "0.0.1",
-  "description": "",
+  "description": "Node Red modules for Sphero BB8 robot",
+  "author": "enolgor <enolgor@teleco.upv.es",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enolgor/node-red-contrib-sphero-bb8.git"
+  },
+  "bugs": {
+    "url": "https://github.com/enolgor/node-red-contrib-sphero-bb8/issues"
+  },
   "keywords": [
-    "node-red"
+    "node-red", "sphero", "bb8", "robot"
   ],
   "node-red": {
     "nodes": {
