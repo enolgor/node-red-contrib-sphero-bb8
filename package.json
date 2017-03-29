@@ -8,6 +8,9 @@
     "email": "enolgor@teleco.upv.es",
     "url": "http://github.com/enolgor"
   },
+  "scripts": {
+    "lint": "eslint ."
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/enolgor/node-red-contrib-sphero-bb8.git"
@@ -16,7 +19,10 @@
     "url": "https://github.com/enolgor/node-red-contrib-sphero-bb8/issues"
   },
   "keywords": [
-    "node-red", "sphero", "bb8", "robot"
+    "node-red",
+    "sphero",
+    "bb8",
+    "robot"
   ],
   "node-red": {
     "nodes": {
@@ -34,5 +40,10 @@
   "dependencies": {
     "noble": "^1.7.0",
     "sphero": "^0.9.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.16.0",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-import": "^2.2.0"
   }
 }
