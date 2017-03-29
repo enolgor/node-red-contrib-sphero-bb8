@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/node-red-contrib-sphero-bb8.png)](https://nodei.co/npm/node-red-contrib-sphero-bb8/)
+
 # node-red-contrib-sphero-bb8
 
 This library has a collection of nodes for [Node-RED](https://nodered.org/) to control your [sphero bb8 robot](http://www.sphero.com/starwars/bb8).
