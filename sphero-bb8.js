@@ -90,5 +90,6 @@ module.exports = (RED) => ({
         context_bb8[bb8_config.uuid] = context_bb8[bb8_config.uuid] || new bb8(bb8_config.uuid);
         context.set('bb8', context_bb8);
         return context_bb8[bb8_config.uuid];
-    }
+    },
+    BB8: bb8
 });

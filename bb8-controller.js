@@ -1,5 +1,3 @@
-'use strict'
-
 const sphero = require('sphero');
 const Promise = require('bluebird');
 
@@ -8,24 +6,24 @@ const uuid = process.argv[2];
 const bb8 = sphero(uuid);
 
 const resp = {
-    ok: (id, payload) => {
-        payload = payload || null;
-        process.send({
-            cmd: 'resp',
-            id: id,
-            payload: payload,
-            status: 'ok'
-        });
-    },
-    err: (id, payload) => {
-        payload = payload || null;
-        process.send({
-            cmd: 'resp',
-            id: id,
-            payload: payload,
-            status: 'err'
-        });
-    }
+  ok: (id, payload) => {
+    payload = payload || null;
+    process.send({
+      cmd: 'resp',
+      id: id,
+      payload: payload,
+      status: 'ok'
+    });
+  },
+  err: (id, payload) => {
+    payload = payload || null;
+    process.send({
+      cmd: 'resp',
+      id: id,
+      payload: payload,
+      status: 'err'
+    });
+  }
 };
 
 const event = (type, data) => {
